@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<body>
+    <form name="form1" onsubmit="mySubmit(event)">
+        <input type="number" name="a" placeholder="a" />
+        <br />
+        <input type="number" name="b" placeholder="b" /><br />
+        <button type="submit">送出</button>
+    </form>
+    <div id="info"></div>
+
+    <script>
+        const mySubmit = (e) => {
+            e.preventDefault(); // 不要讓表單以傳統的方式送出
+            const a = document.form1.a.value;
+            const b = document.form1.b.value;
+            console.log({ a, b });
+
+            // Promise 類型的物件
+            fetch(`20240412-09-qs.php?a=${a}&b=${b}`)
+                .then((r) => r.text())
+                .then((txt) => {
+                    info.innerHTML = txt;
+                });
+        };
+    </script>
+</body>
+
+</html>

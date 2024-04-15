@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre id="info"></pre>
+
+    <script>
+        // Promise 類型的物件
+        fetch(`20240415-09-json.php`)
+            .then((r) => r.json())
+            .then((data) => {
+                console.log(data);
+
+                info.innerHTML = JSON.stringify(data, null, 4)//4 ->縮排
+            });
+    </script>
+</body>
+
+</html>
