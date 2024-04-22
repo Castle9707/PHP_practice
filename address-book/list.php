@@ -74,7 +74,7 @@ if ($totalRows) {
     </div>
     <div class="row">
         <div class="col">
-            <table class="table">
+            <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
