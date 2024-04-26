@@ -1,4 +1,9 @@
 <?php
+$title = '通訊列表';
+$pageName = 'list';
+?>
+
+<?php
 require __DIR__ . "/../config/pdo-connect.php";
 
 // $sql = "SELECT * FROM address_book LIMIT 3";
@@ -60,14 +65,35 @@ if ($totalRows) {
 <?php include __DIR__ . '/parts/navbar.php' ?>
 <div class="container">
     <div class="row">
-        <div class="col">
+        <div class="col d-flex justify-content-center my-4">
             <nav aria-label="Page Navigation Example">
                 <ul class="pagination">
-                    <?php for ($i = 1; $i <= 10; $i++): ?>
-                        <li class="page-item">
-                            <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
-                        </li>
-                    <?php endfor ?>
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1">
+                            <i class="fa-solid fa-angles-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item ">
+                        <a class="page-link" href="?page=<?= $page - 1 ?>">
+                            <i class="fa-solid fa-angle-left"></i>
+                        </a>
+                    </li>
+                    <?php for ($i = $page - 5; $i <= $page + 5; $i++):
+                        if ($i >= 1 and $i <= $totalPages): ?>
+                            <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                                <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                            </li>
+                        <?php endif; endfor; ?>
+                    <li class="page-item ">
+                        <a class="page-link" href="?page=<?= $page + 1 ?>">
+                            <i class="fa-solid fa-angle-right"></i>
+                        </a>
+                    </li>
+                    <li class="page-item ">
+                        <a class="page-link" href="?page=<?= $totalPages ?>">
+                            <i class="fa-solid fa-angles-right"></i>
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -77,27 +103,48 @@ if ($totalRows) {
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
+                        <th scope="col"><i class="fa-solid fa-trash"></i></th>
                         <th scope="col">#</th>
                         <th scope="col">姓名</th>
                         <th scope="col">Email</th>
                         <th scope="col">手機</th>
                         <th scope="col">生日</th>
                         <th scope="col">地址</th>
+                        <th scope="col"><i class="fa-solid fa-pen-to-square"></i></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($rows as $r): ?>
                         <tr>
+                            <td><a data-bs-toggle="modal" href="#deleteModal"><i class="fa-solid fa-trash"></i></a></td>
                             <td><?= $r['sid'] ?></td>
                             <td><?= $r['name'] ?></td>
                             <td><?= $r['email'] ?></td>
                             <td><?= $r['mobile'] ?></td>
                             <td><?= $r['birthday'] ?></td>
-                            <td><?= $r['address'] ?></td>
+                            <td><?= htmlentities($r['address']) ?></td>
+                            <td><a href="edit.php?sid=<?= $r['sid'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
+        </div>
+    </div>
+</div>
+
+<!-- 確認刪除 彈出視窗 -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">確定刪除此筆資料？</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">保留</button>
+                <!-- 這裡有問題 -->
+                <button type="button" class="btn btn-danger" herf="delete.php?sid=<?php $r['sid'] ?>">確認刪除</button>
+            </div>
         </div>
     </div>
 </div>
