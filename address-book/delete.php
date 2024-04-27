@@ -1,5 +1,5 @@
 <?php
-
+require __DIR__ . '/admin-required.php';
 require __DIR__ . '/../config/pdo-connect.php';
 
 $sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
