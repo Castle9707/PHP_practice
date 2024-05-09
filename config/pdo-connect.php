@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/connect-config.php';
+require __DIR__ . './connect-config.php';
 
 $dsn = "mysql:host={$db_host};dbname={$db_name};port={$db_port};charset=utf8mb4";
 
@@ -10,4 +10,7 @@ $pdo_options = [
 ];
 
 $pdo = new PDO($dsn, $db_user, $db_pass, $pdo_options);
-?>
+
+if (!isset($_SESSION)) {
+    session_start();
+}
